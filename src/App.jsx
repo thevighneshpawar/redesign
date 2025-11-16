@@ -495,68 +495,118 @@ function App() {
           </div>
 
           {/* Cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 z-10 ">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
             {features.map((feature, idx) => {
-              const Icon = feature.icon
+              const Icon = feature.icon;
               return (
                 <motion.article
                   key={idx}
                   initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.08 }}
-                  whileHover={{ y: -8, scale: 1.01 }}
-                  className="relative bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-cyan-400"
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  className="
+          relative rounded-2xl shadow-lg overflow-hidden
+          bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 p-[2px]
+        "
                 >
-                  {/* Top image band (use gradient as placeholder or swap for real image) */}
-                  <div className="h-36 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-sky-200 to-indigo-200" style={{ backgroundImage: 'linear-gradient(120deg,#c7e6ff,#e9d5ff)' }} />
+                  {/* Inner white card */}
+                  <div className="bg-white rounded-2xl overflow-hidden h-full flex flex-col">
 
-                  {/* Badge / stamp (overlapping top-left) */}
-                  <div className="absolute top-2 left-4">
-                    <div className="bg-white/95 border border-slate-200 px-3 py-1 rounded-full text-xs font-mono font-semibold shadow-sm">
-                      <span className="text-amber-500 mr-2">●</span>
-                      {feature.code || 'SV'}
-                    </div>
-                  </div>
 
-                  {/* Card content */}
-                  <div className="p-6 pt-8 bg-white z-10">
-                    <div className="flex items-start gap-4">
-                      {/* Icon in travel emblem circle */}
-                      <div className="w-14 h-14 rounded-xl bg-white shadow-md flex items-center justify-center border border-slate-100">
-                        <div className="w-11 h-11 rounded-lg flex items-center justify-center bg-gradient-to-br from-rose-400 to-indigo-500">
-                          <Icon size={20} className="text-white" />
-                        </div>
-                      </div>
+                    {/* Top Gradient Banner */}
+                    <div
+                      className="h-36 bg-gradient-to-br from-sky-200 via-blue-100 to-indigo-200"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(135deg, #b9e7ff 0%, #d4c5ff 60%, #f6e8ff 100%)",
+                      }}
+                    />
 
-                      {/* Title + desc */}
-                      <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-slate-900 mb-1">{feature.title}</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">{feature.description}</p>
-
-                        {/* details row: small chips like savings or quick facts */}
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">Expert-curated</span>
-                          <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">24/7 Support</span>
-                        </div>
+                    {/* Badge / Ribbon */}
+                    <div className="absolute top-2 left-4">
+                      <div className="
+              bg-white/95 border border-slate-200 px-3 py-1 rounded-full
+              text-xs font-mono font-semibold shadow-sm
+            ">
+                        <span className="text-amber-500 mr-2">●</span>
+                        {feature.code || "SV"}
                       </div>
                     </div>
 
-                    {/* footer row with CTA and microtext */}
-                    <div className="mt-6 flex items-center justify-between">
-                      <button className="inline-flex items-center gap-2 text-sm font-semibold px-3 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-rose-500 text-white shadow-sm hover:opacity-95">
-                        Explore <ArrowUpRight size={14} />
-                      </button>
+                    {/* Card content */}
+                    <div className="p-6 pt-8">
+                      <div className="flex items-start gap-4">
 
-                      <div className="text-[11px] font-mono text-slate-400">Avg. savings: ₹8,000</div>
+                        {/* Icon emblem */}
+                        <div className="
+                w-14 h-14 rounded-xl bg-white shadow-md border border-slate-100 
+                flex items-center justify-center
+              ">
+                          <div className="
+                  w-11 h-11 rounded-lg
+                  bg-gradient-to-br from-rose-400 to-indigo-500 
+                  flex items-center justify-center
+                ">
+                            <Icon size={20} className="text-white" />
+                          </div>
+                        </div>
+
+                        {/* Title + Description */}
+                        <div className="flex-1">
+                          <h3 className="text-xl font-semibold text-slate-900 mb-1">
+                            {feature.title}
+                          </h3>
+                          <p className="text-slate-600 text-sm leading-relaxed">
+                            {feature.description}
+                          </p>
+
+                          {/* Chips */}
+                          <div className="mt-4 flex flex-wrap gap-2">
+                            <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">
+                              Expert-curated
+                            </span>
+                            <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">
+                              24/7 Support
+                            </span>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* Footer */}
+                      <div className="mt-6 flex items-center justify-between">
+                        <button className="
+                inline-flex items-center gap-2 text-sm font-semibold
+                px-3 py-2 rounded-md
+                bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400
+                text-white shadow-sm hover:opacity-95 transition
+              ">
+                          Explore <ArrowUpRight size={14} />
+                        </button>
+
+                        <div className="text-[11px] font-mono text-slate-400">
+                          Avg. savings: ₹8,000
+                        </div>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* subtle map texture watermark */}
-                  <div className="pointer-events-none absolute inset-0 opacity-5 mix-blend-multiply" style={{ backgroundImage: 'url("/assets/map-texture.svg")', backgroundSize: 'cover' }} />
+                    {/* Subtle map texture */}
+                    <div
+                      className="
+              pointer-events-none absolute inset-0 opacity-5 mix-blend-multiply
+            "
+                      style={{
+                        backgroundImage: 'url("/assets/map-texture.svg")',
+                        backgroundSize: "cover",
+                      }}
+                    />
+                  </div>
                 </motion.article>
-              )
+              );
             })}
           </div>
+
         </div>
       </section>
 
@@ -566,9 +616,9 @@ function App() {
 
       <section
         id="journey"
-        className="py-20 px-4 relative z-10"
+        className="py-20 px-4  bg-gradient-to-br from-amber-50 to-orange-50"
       >
-        <div className="max-w-6xl mx-auto z-10">
+        <div className="max-w-6xl mx-auto relative z-10">
           {/* Section Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-slate-200 shadow-sm mb-4">
@@ -760,12 +810,11 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials - Luggage Tags */}
-      <section id="testimonials" className="py-20 px-4 bg-gradient-to-br from-slate-900 to-slate-800">
-        <div className="max-w-6xl mx-auto">
-
-          {/* Section Header */}
-          <div className="text-center mb-12">
+      {/* ---------- Recommended: Masonry Ticket-style Testimonials ---------- */}
+      <section id="testimonials" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto relative z-10">
+          {/* header */}
+          <div className="text-center mb-10">
             <div className="inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-slate-200 shadow-sm mb-4">
               <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm" />
               <div className="text-xs font-mono uppercase tracking-widest text-slate-500">TRAVELER STORIES</div>
@@ -775,105 +824,203 @@ function App() {
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">What our travelers say about their journeys</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {testimonials.map((testimonial, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="relative"
-              >
-                {/* Luggage Tag Card */}
-                <div className="bg-white rounded-lg p-6 shadow-lg relative">
-                  {/* Tag Hole */}
-                  <div className="absolute -top-1 left-6 w-3 h-3 bg-slate-300 rounded-full border-2 border-slate-400" />
+          {/* Masonry container (CSS columns) */}
+          <style>{`
+      .masonry {
+        column-gap: 20px;
+      }
+      @media (min-width: 640px) { .masonry { column-count: 1; } }
+      @media (min-width: 768px) { .masonry { column-count: 2; } }
+      @media (min-width: 1200px) { .masonry { column-count: 3; } }
 
-                  {/* Content */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <div className="text-slate-900 font-bold font-mono text-sm">{testimonial.name}</div>
-                        <div className="text-slate-500 text-xs font-mono flex items-center gap-1">
-                          <MapPin size={10} />
-                          {testimonial.location}
+      /* prevent breaking inside columns */
+      .masonry-item { break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: 20px; }
+    `}</style>
+
+          <div className="masonry mx-auto flex justify-center">
+            {testimonials.map((t, idx) => (
+              <article
+                key={idx}
+                className="masonry-item mx-auto"
+                style={{ maxWidth: 380 }}
+                role="article"
+                aria-label={`Testimonial from ${t.name}`}
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.04 }}
+                  whileHover={{ translateY: -6, boxShadow: '0 18px 40px rgba(2,6,23,0.12)' }}
+                  className="rounded-xl p-[1.5px] bg-gradient-to-r from-blue-600 via-cyan-400 to-teal-400"
+                >
+                  <div className="bg-white/95 backdrop-blur-sm rounded-lg px-5 py-4 relative overflow-hidden">
+                    {/* luggage-tag hole */}
+                    <span className="absolute -top-2 left-6 w-3 h-3 bg-slate-200 rounded-full border-2 border-white" />
+
+                    {/* header */}
+                    <div className="flex items-start justify-between mb-3 gap-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 rounded-md bg-slate-100 flex items-center justify-center text-slate-700 font-mono">
+                          {/* avatar or initial */}
+                          {t.avatar ? <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-md object-cover" /> : (t.image ?? t.name?.charAt(0) ?? '👤')}
+                        </div>
+                        <div>
+                          <div className="text-slate-900 font-bold text-sm font-mono">{t.name}</div>
+                          <div className="text-xs text-slate-500 flex items-center gap-1">
+                            <MapPin size={12} /> <span>{t.country ?? t.location}</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-slate-900 font-mono text-xs">{testimonial.flight}</div>
-                        <div className="text-slate-500 text-xs font-mono">SEAT {testimonial.seat}</div>
+
+                      <div className="text-right text-xs">
+                        <div className="text-slate-900 font-mono">{t.flight ?? '—'}</div>
+                        <div className="text-slate-500">SEAT {t.seat ?? '—'}</div>
                       </div>
                     </div>
 
-                    <p className="text-slate-700 italic leading-relaxed">"{testimonial.quote}"</p>
-                  </div>
+                    {/* quote */}
+                    <p className="text-slate-700 italic mb-3 leading-relaxed">“{t.quote}”</p>
 
-                  {/* Rating */}
-                  <div className="flex gap-1">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} size={16} className="text-amber-400 fill-current" />
-                    ))}
-                  </div>
+                    {/* footer */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-1">
+                        {Array.from({ length: (t.rating || 5) }).map((_, iStar) => (
+                          <Star key={iStar} size={14} className="text-amber-400" />
+                        ))}
+                      </div>
+                      <div className="text-xs font-mono text-slate-400">Verified traveler</div>
+                    </div>
 
-                  {/* Perforated Bottom */}
-                  <PerforatedLine className="mt-4" />
-                </div>
-              </motion.div>
+                    {/* perforation bar */}
+                    <div className="mt-4">
+                      <div className="h-2 w-full bg-[repeating-linear-gradient(90deg,#e6eef8,#e6eef8 6px, transparent 6px, transparent 12px)] rounded" />
+                    </div>
+                  </div>
+                </motion.div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
+
+
+
       {/* Stats - Departure Board */}
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-orange-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-slate-900 border-2 border-slate-700 rounded-lg p-8 shadow-2xl">
-            {/* Board Header */}
-            <div className="text-center mb-8">
-              <div className="text-amber-300 text-sm font-mono uppercase tracking-widest mb-2">DEPARTURE BOARD</div>
-              <h3 className="text-2xl font-black text-white font-serif">TRAVEL STATISTICS</h3>
+      <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-white">
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-slate-200 shadow-sm mb-4">
+              <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm" />
+              <div className="text-xs font-mono uppercase tracking-widest text-slate-500">DEPARTURE BOARD</div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {stats.map((stat, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="text-center"
-                >
-                  <motion.div
-                    animate={{ scale: [1, 1.1, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: idx * 0.2 }}
-                    className="text-4xl md:text-5xl font-black text-amber-400 font-mono mb-2"
-                  >
-                    {stat.label}
-                  </motion.div>
-                  <div className="text-amber-200 text-sm font-mono uppercase tracking-widest">{stat.desc}</div>
-                  <div className="text-slate-500 text-xs font-mono mt-1">{stat.code}</div>
-                </motion.div>
-              ))}
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">TRAVEL STATISTICS</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Essential metrics from Rimigo — simple and clear.</p>
+          </div>
+
+          {/* grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+            {/* Tile A */}
+            <div className="rounded-xl p-[1.5px] bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400">
+              <div className="bg-white rounded-xl h-full flex flex-col overflow-hidden">
+                <div className="px-5 py-5 flex-1 flex flex-col">
+                  <div className="text-xs font-mono text-slate-500 uppercase tracking-wide">Vacations Planned</div>
+                  <div className="text-3xl md:text-4xl font-black font-mono text-slate-900 mt-3">242</div>
+
+                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="w-full h-6 mt-3">
+                    <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,14 20,10 40,6 60,8 80,3 100,6" />
+                  </svg>
+
+                  <div className="mt-auto flex items-center justify-between text-[11px] font-mono text-slate-400 pt-4">
+                    <span>Trips planned</span>
+                    <span>Live</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Board Footer */}
-            <div className="mt-8 pt-4 border-t border-slate-700">
-              <MicrotextStrip text="RIMIGO AIR • VACATION STATISTICS • BOARDING PASS •" />
+            {/* Tile B */}
+            <div className="rounded-xl p-[1.5px] bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400">
+              <div className="bg-white rounded-xl h-full flex flex-col overflow-hidden">
+                <div className="px-5 py-5 flex-1 flex flex-col">
+                  <div className="text-xs font-mono text-slate-500 uppercase tracking-wide">Traveller Rating</div>
+                  <div className="text-3xl md:text-4xl font-black font-mono text-slate-900 mt-3">4.9<span className="text-amber-400">★</span></div>
+
+                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="w-full h-6 mt-3">
+                    <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,12 20,10 40,9 60,9 80,7 100,8" />
+                  </svg>
+
+                  <div className="mt-auto flex items-center justify-between text-[11px] font-mono text-slate-400 pt-4">
+                    <span>Avg rating</span>
+                    <span>Verified</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* Tile C */}
+            <div className="rounded-xl p-[1.5px] bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400">
+              <div className="bg-white rounded-xl h-full flex flex-col overflow-hidden">
+                <div className="px-5 py-5 flex-1 flex flex-col">
+                  <div className="text-xs font-mono text-slate-500 uppercase tracking-wide">Countries</div>
+                  <div className="text-3xl md:text-4xl font-black font-mono text-slate-900 mt-3">78</div>
+
+                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="w-full h-6 mt-3">
+                    <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,16 20,12 40,9 60,8 80,9 100,6" />
+                  </svg>
+
+                  <div className="mt-auto flex items-center justify-between text-[11px] font-mono text-slate-400 pt-4">
+                    <span>Countries covered</span>
+                    <span>Geo</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Tile D */}
+            <div className="rounded-xl p-[1.5px] bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400">
+              <div className="bg-white rounded-xl h-full flex flex-col overflow-hidden">
+                <div className="px-5 py-5 flex-1 flex flex-col">
+                  <div className="text-xs font-mono text-slate-500 uppercase tracking-wide">Avg Savings</div>
+                  <div className="text-3xl md:text-4xl font-black font-mono text-slate-900 mt-3">₹8,354</div>
+
+                  <svg viewBox="0 0 100 24" preserveAspectRatio="none" className="w-full h-6 mt-3">
+                    <polyline fill="none" stroke="#06b6d4" strokeWidth="2" points="0,14 18,11 36,12 54,10 72,8 90,11 100,9" />
+                  </svg>
+
+                  <div className="mt-auto flex items-center justify-between text-[11px] font-mono text-slate-400 pt-4">
+                    <span>Avg per booking</span>
+                    <span>INR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* microstrip footer */}
+          <div className="mt-6 pt-4 border-t border-slate-200">
+            <MicrotextStrip />
           </div>
         </div>
       </section>
 
+
+
       {/* FAQ - Perforated Accordion */}
       <section id="faq" className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="inline-block bg-slate-50 border-2 border-slate-300 rounded-lg px-6 py-3 mb-6">
-              <div className="text-slate-500 text-xs font-mono uppercase tracking-widest">HELP DESK</div>
+
+          {/* header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-slate-200 shadow-sm mb-4">
+              <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm" />
+              <div className="text-xs font-mono uppercase tracking-widest text-slate-500">HELP DESK</div>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-6 font-serif">FAQ</h2>
+
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">FAQ</h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">Frequently asked questions</p>
           </div>
 
@@ -884,105 +1031,178 @@ function App() {
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="border-2 border-slate-300 rounded-lg overflow-hidden hover:border-amber-400 transition-colors"
+                className="
+        border-2 border-slate-200 rounded-lg overflow-hidden 
+        hover:border-cyan-400 transition-colors 
+        bg-white shadow-sm
+      "
               >
+                {/* Question Row */}
                 <motion.button
                   onClick={() => setExpandedFAQ(expandedFAQ === idx ? null : idx)}
-                  className="w-full p-6 flex items-center justify-between hover:bg-amber-50 transition text-left"
+                  className="
+          w-full p-6 flex items-center justify-between 
+          hover:bg-sky-50 transition text-left
+        "
                 >
                   <div className="flex items-center gap-4">
-                    <div className="text-amber-600 text-sm font-mono font-bold">{faq.code}</div>
-                    <h3 className="text-lg font-bold text-slate-900 font-mono">{faq.q}</h3>
+                    <div className="text-cyan-600 text-sm font-mono font-bold">
+                      {faq.code || `Q${idx + 1}`}
+                    </div>
+
+                    <h3 className="text-lg font-bold text-slate-900 font-mono">
+                      {faq.q}
+                    </h3>
                   </div>
+
                   <motion.div
                     animate={{ rotate: expandedFAQ === idx ? 45 : 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <Plus size={24} className="text-amber-600" />
+                    <Plus size={24} className="text-cyan-600" />
                   </motion.div>
                 </motion.button>
 
+                {/* Answer Section */}
                 <AnimatePresence>
                   {expandedFAQ === idx && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
+                      animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="px-6 py-4 bg-amber-50 border-t-2 border-dashed border-slate-300"
+                      className="
+              px-6 py-4 bg-sky-50 
+              border-t-2 border-dashed border-slate-200
+            "
                     >
-                      <p className="text-slate-700 leading-relaxed">{faq.a}</p>
+                      <p className="text-slate-700 leading-relaxed">
+                        {faq.a}
+                      </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* CTA - Final Boarding Call */}
-      <section className="py-20 px-4 bg-gradient-to-br from-slate-900 to-slate-800">
+      <section className="py-20 px-4 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Final Boarding Pass */}
-          <div className="bg-white border-2 border-amber-400 rounded-lg p-8 shadow-2xl">
-            <div className="mb-6">
-              <div className="text-amber-600 text-sm font-mono uppercase tracking-widest mb-2">FINAL BOARDING CALL</div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 font-serif">READY FOR DEPARTURE?</h2>
-              <p className="text-slate-600 text-lg max-w-2xl mx-auto">
-                Your perfect vacation is waiting. Let's start planning your journey today.
-              </p>
-            </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(245, 158, 11, 0.4)' }}
-              whileTap={{ scale: 0.95 }}
-              className="px-12 py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-lg flex items-center gap-3 mx-auto uppercase tracking-widest font-mono mb-6"
-            >
-              <Plane size={20} />
-              START YOUR ADVENTURE
-              <ArrowUpRight size={20} />
-            </motion.button>
+          {/* Rimigo Themed CTA Card */}
+          <div className="
+      relative p-[2px] rounded-2xl 
+      bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 
+      shadow-xl
+    ">
+            <div className="bg-white rounded-2xl p-10">
 
-            <div className="text-slate-500 text-xs font-mono">
-              GATE C12 • BOARDING TIME: 07:30 • SEAT: 14A • FLIGHT: RG-824
+              {/* Header */}
+              <div className="mb-6 relative z-10 ">
+                <div className="text-cyan-600 text-sm font-mono uppercase tracking-widest mb-2">
+                  Final Boarding Call
+                </div>
+
+                <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 font-serif">
+                  Ready for Departure?
+                </h2>
+
+                <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+                  Your perfect vacation is waiting. Let’s start planning your journey today.
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <motion.button
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(56, 189, 248, 0.45)" // cyan glow
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="
+            px-12 py-4 rounded-lg mx-auto flex items-center gap-3
+            font-mono font-bold text-lg text-white uppercase tracking-widest
+            bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400
+            shadow-md relative z-10 
+          "
+              >
+                <Plane size={20} />
+                Start Your Adventure
+                <ArrowUpRight size={20} />
+              </motion.button>
+
+              {/* Flight Micro Info */}
+              <div className="mt-6 text-slate-400 text-xs font-mono">
+                Gate C12 • Boarding Time: 07:30 • Seat: 14A • Flight: RG-824
+              </div>
+
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* Footer - Ticket Fine Print */}
-      <footer className="bg-slate-950 text-slate-400 py-12 px-4 border-t-2 border-dashed border-slate-700 relative z-50">
-        <div className="max-w-6xl mx-auto">
-          {/* Fine Print Area */}
-          <div className="text-center mb-8">
-            <div className="text-slate-500 text-[10px] font-mono leading-relaxed tracking-wide uppercase mb-4">
-              RIMIGO AIR VACATION TICKET • NOT VALID FOR TRAVEL UNLESS ENDORSED • BAGGAGE ALLOWANCE 15KG •
-              SEQUENCE NO: 042 • TICKET NO: 029384-128392 • ISSUED BY: RIMIGO TRAVEL SYSTEMS
+
+      <footer className="relative z-10 bg-slate-800/95 text-slate-400 py-16 px-4 border-t border-slate-800 overflow-hidden">
+
+
+        <div
+          className="
+      absolute inset-0 opacity-80 
+      bg-[radial-gradient(circle,rgba(255,255,255,0.5)_1px,transparent_1px)]
+      bg-[size:40px_40px]
+    "
+        />
+        {/* Very subtle world map texture */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[url('/assets/map-texture.svg')] bg-cover bg-center" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Top Microtext + Barcode */}
+          <div className="text-center mb-10">
+            <div className="text-slate-500 text-[10px] font-mono uppercase tracking-widest leading-relaxed mb-4">
+              RIMIGO AIR • DIGITAL TRAVEL PLATFORM • VACATION ENGINE • PASSENGER SYSTEMS ONLINE • TICKET NO: 029384-128392
             </div>
 
-            <BarcodeStrip height={20} className="mb-4" />
-            <MicrotextStrip text="RIMIGO AIR • VACATION PLANNING • TRAVEL TICKET • BOARDING PASS •" />
+            <BarcodeStrip height={20} className="opacity-70 mb-4" />
+
+            <MicrotextStrip
+              text="RIMIGO AIR • TRAVEL TECHNOLOGY • VACATION PLANNING • BOARDING PASS •"
+              className="text-cyan-400"
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* Main Columns */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+            {/* Brand */}
             <div>
-              <div className="text-white font-bold text-lg font-mono mb-4">RIMIGO AIR</div>
-              <p className="text-slate-500 text-sm leading-relaxed">
-                Your vacation made easy with personalized travel assistance and expert guidance.
+              <div className="text-white font-extrabold text-xl mb-4 tracking-wide">RIMIGO</div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Your vacation made simple with modern travel technology and personalized planning.
               </p>
             </div>
 
+            {/* Links */}
             {[
-              { title: 'COMPANY', links: ['ABOUT US', 'CAREERS', 'CONTACT'] },
-              { title: 'RESOURCES', links: ['BLOG', 'STORIES', 'GUIDES'] },
-              { title: 'SUPPORT', links: ['HELP DESK', 'POLICIES', 'TERMS'] }
+              { title: "Company", links: ["About Us", "Careers", "Contact"] },
+              { title: "Resources", links: ["Blog", "Stories", "Guides"] },
+              { title: "Support", links: ["Help Desk", "Policies", "Terms"] }
             ].map((col, idx) => (
               <div key={idx}>
-                <div className="text-white font-bold text-sm font-mono uppercase tracking-widest mb-4">{col.title}</div>
+                <div className="text-white font-bold text-sm uppercase tracking-widest mb-3">
+                  {col.title}
+                </div>
                 <ul className="space-y-2">
-                  {col.links.map((link) => (
+                  {col.links.map(link => (
                     <li key={link}>
-                      <a href="#" className="text-slate-500 hover:text-amber-400 transition-colors text-sm font-mono">
+                      <a
+                        href="#"
+                        className="text-slate-400 hover:text-cyan-400 transition-all text-sm"
+                      >
                         {link}
                       </a>
                     </li>
@@ -990,27 +1210,34 @@ function App() {
                 </ul>
               </div>
             ))}
+
           </div>
 
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between">
-            <div className="text-slate-500 text-xs font-mono mb-4 md:mb-0">
-              © 2025 RIMIGO AIR • ALL RIGHTS RESERVED • TICKET NO: 823-493204
+          {/* Bottom Row */}
+          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+
+            <div className="text-slate-500 text-xs font-mono tracking-wide">
+              © 2025 RIMIGO AIR • ALL RIGHTS RESERVED • SYSTEM SEQ: 823-493204
             </div>
-            <div className="flex gap-4">
+
+            <div className="flex gap-5">
               {[Instagram, Twitter, Linkedin, Mail].map((Icon, idx) => (
                 <motion.a
                   key={idx}
                   href="#"
-                  whileHover={{ scale: 1.2, rotate: 10 }}
-                  className="text-slate-500 hover:text-amber-400 transition-colors"
+                  whileHover={{ scale: 1.15 }}
+                  className="text-slate-400 hover:text-cyan-400 transition-colors"
                 >
-                  <Icon size={16} />
+                  <Icon size={18} />
                 </motion.a>
               ))}
             </div>
+
           </div>
+
         </div>
       </footer>
+
     </div>
   )
 }
