@@ -1,11 +1,20 @@
-/* Premium Luxury Travel Website - Elegant Animations */
+/* Boarding Pass + Airport Travel Aesthetic */
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* Premium serif and sans-serif typography */
+/* Updated boarding pass color scheme with cream, teal, and amber accents */
+
 :root {
   --serif: "Playfair Display", serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --teal: #14b8a6;
+  --emerald: #059669;
+  --amber: #f59e0b;
+  --cream: #fffbf0;
+  --gold: #d4af37;
+  --white: #ffffff;
+  --teal-900: #134e4a;
+  --slate-900: #0f172a;
 }
 
 * {
@@ -17,85 +26,128 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.font-serif {
+h6 {
   font-family: var(--serif);
   letter-spacing: -0.5px;
 }
 
-/* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
 }
 
-/* Elegant scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #f0f9ff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: linear-gradient(to bottom, #14b8a6, #0ea5e9);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: linear-gradient(to bottom, #059669, #0284c7);
 }
 
-/* Selection styling */
 ::selection {
-  background: #0f172a;
+  background: #14b8a6;
   color: white;
 }
 
-/* Premium animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes subtlePulse {
+/* Boarding pass perforated animations */
+@keyframes perforation {
   0%,
   100% {
-    opacity: 1;
+    opacity: 0.3;
   }
   50% {
-    opacity: 0.95;
+    opacity: 0.6;
   }
 }
 
-@keyframes glowSubtle {
+@keyframes dottedPath {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes planeFloat {
   0%,
   100% {
-    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+    transform: translateY(0px) rotate(0deg);
   }
   50% {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    transform: translateY(-20px) rotate(10deg);
   }
 }
 
-/* Button transitions */
+@keyframes passportStamp {
+  0% {
+    transform: rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Enhanced color palette for luxury boarding pass aesthetic */
+.text-gradient {
+  background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Cream background for premium feel */
+.bg-cream {
+  background-color: #fffbf0;
+}
+
+/* Teal accents throughout */
+.border-teal-100 {
+  border-color: #ccf7f3;
+}
+
+.border-teal-300 {
+  border-color: #67e8f9;
+}
+
+.border-teal-400 {
+  border-color: #2dd4bf;
+}
+
+.text-teal-600 {
+  color: #14b8a6;
+}
+
+.text-teal-700 {
+  color: #0d9488;
+}
+
+.text-teal-900 {
+  color: #134e4a;
+}
+
+.bg-teal-50 {
+  background-color: #f0fdfa;
+}
+
+.bg-teal-100 {
+  background-color: #ccf7f3;
+}
+
+/* Button animations with teal theme */
 button {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -114,10 +166,23 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
+  box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.1);
 }
 
-/* Mobile responsiveness */
+/* Perforated border effect for boarding pass cards */
+.perforated-border {
+  border: 2px dashed #14b8a6;
+  border-radius: 1.5rem;
+}
+
+/* Glass morphism effect for testimonials */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile responsive adjustments */
 @media (max-width: 768px) {
   :root {
     font-size: 16px;
@@ -134,4 +199,17 @@ select:focus {
   h3 {
     font-size: 1.5rem;
   }
+}
+
+/* Animation utilities */
+.animate-plane {
+  animation: planeFloat 3s ease-in-out infinite;
+}
+
+.animate-perforation {
+  animation: perforation 2s ease-in-out infinite;
+}
+
+.animate-stamp {
+  animation: passportStamp 4s ease-in-out infinite;
 }
