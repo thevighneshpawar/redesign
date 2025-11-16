@@ -232,17 +232,27 @@ function App() {
   )
 
   // Microtext strip component
-  const MicrotextStrip = ({ text = "RIMIGO • VACATION TICKET • BOARDING PASS •" }) => (
-    <div className="overflow-hidden whitespace-nowrap">
-      <motion.div
-        className="text-[16px] text-slate-500 tracking-widest font-mono inline-block"
-        animate={{ x: [0, -100] }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-      >
-        {Array(10).fill(text).join(' • ')}
-      </motion.div>
-    </div>
-  )
+  const MicrotextStrip = ({ text = "RIMIGO • VACATION TICKET • BOARDING PASS •" }) => {
+    const content = Array(10).fill(text).join(' • ');
+
+    const highlightedContent = content.split(/(RIMIGO)/).map((part, index) =>
+      part === "RIMIGO"
+        ? <span key={index} className="bg-cyan-400 text-white px-1 mx-1">RIMIGO</span>
+        : part
+    );
+
+    return (
+      <div className="overflow-hidden whitespace-nowrap">
+        <motion.div
+          className="text-[16px] text-slate-500 tracking-widest font-mono inline-block"
+          animate={{ x: [0, -100] }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        >
+          {highlightedContent}
+        </motion.div>
+      </div>
+    );
+  };
 
   // Perforated line component
   const PerforatedLine = ({ vertical = false, className = '' }) => (
@@ -485,7 +495,7 @@ function App() {
           </div>
 
           {/* Cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 z-10 ">
             {features.map((feature, idx) => {
               const Icon = feature.icon
               return (
@@ -571,148 +581,94 @@ function App() {
           </div>
 
           <div className="relative">
-            {/* SVG spine: centered vertical line with gradient + dashed look */}
-            <svg
-              className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-3 pointer-events-none"
-              viewBox="0 0 10 1000"
-              preserveAspectRatio="xMidYMid slice"
-              style={{ height: '100%' }}
-              aria-hidden
-            >
-              <defs>
-                <linearGradient id="spineGrad" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#2563eb" stopOpacity="1" />
-                  <stop offset="60%" stopColor="#06b6d4" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#14b8a6" stopOpacity="1" />
-                </linearGradient>
+            <div className="mx-auto" style={{ maxWidth: '980px' }}>
+              <style>{`
+      /* tunables */
+      :root {
+        --card-w: 360px;     /* width of each card on md+ */
+        --gap-y: 12px;        /* vertical gap between rows */
+        --gap-x: 18px;       /* horizontal gap between columns */
+        --overlap: 30px;     /* how much right card drops relative to left */
+      }
 
-                {/* dashed stroke pattern */}
-                <pattern id="dots" width="2" height="6" patternUnits="userSpaceOnUse">
-                  <rect width="2" height="2" fill="rgba(255,255,255,0.06)" />
-                </pattern>
-              </defs>
+      /* grid that uses fixed columns so the grid centers naturally */
+      .journey-grid {
+        display: grid;
+        grid-template-columns: repeat(2, var(--card-w));
+        justify-content: center; /* center the two columns in the container */
+        column-gap: var(--gap-x);
+        row-gap: var(--gap-y);
+        align-items: start;
+      }
 
-              {/* main gradient path (solid) */}
-              <line
-                x1="5"
-                x2="5"
-                y1="0"
-                y2="1000"
-                stroke="url(#spineGrad)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                opacity="0.95"
-              />
-              {/* subtle dotted overlay for texture */}
-              <line
-                x1="5"
-                x2="5"
-                y1="0"
-                y2="1000"
-                stroke="url(#dots)"
-                strokeWidth="6"
-                strokeLinecap="round"
-                opacity="0.12"
-              />
-            </svg>
+      /* smaller screens: single column fluid */
+      @media (max-width: 767px) {
+        .journey-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .row-right { transform: none !important; } /* disable overlap on mobile */
+      }
 
-            {/* Steps list */}
-            <div className="space-y-12 relative z-10">
-              {journeySteps.map((step, idx) => {
-                const Icon = step.icon
-                const isLeft = idx % 2 === 0
+      /* apply downward shift to right column cards (md+ only) */
+      @media (min-width: 768px) {
+        .row-right {
+          transform: translateY(var(--overlap));
+        }
+      }
 
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.08, type: 'spring', stiffness: 90, damping: 14 }}
-                    className={`flex items-center gap-6 md:gap-10 ${isLeft ? 'flex-row' : 'flex-row-reverse'} md:items-center`}
-                  >
-                    {/* Card (left or right) */}
-                    <div className="flex-1">
-                      <div className="relative rounded-2xl p-[2px] bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 shadow-md">
-                        {/* Inner glass card */}
-                        <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/40">
+      /* smooth transform */
+      .row-left, .row-right { transition: transform 220ms cubic-bezier(.2,.9,.2,1); }
+    `}</style>
 
-                          {/* Map watermark */}
-                          <div
-                            className="absolute inset-0 opacity-[0.05] pointer-events-none rounded-2xl"
-                            style={{ backgroundImage: 'url("/assets/map-texture.svg")', backgroundSize: 'cover' }}
-                          />
+              {/* Grid */}
+              <div className="journey-grid">
+                {journeySteps.map((step, idx) => {
+                  const Icon = step.icon
+                  const isRight = idx % 2 === 1
 
-                          <div className="relative flex items-start gap-5">
-
-                            {/* Icon */}
-                            <div className="w-14 h-14 rounded-xl bg-white shadow-md flex items-center justify-center border border-slate-200">
-                              <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-blue-600 via-cyan-400 to-teal-400 flex items-center justify-center">
-                                <Icon size={22} className="text-white" />
-                              </div>
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.04, type: 'spring', stiffness: 110, damping: 16 }}
+                      className={isRight ? 'row-right' : 'row-left'}
+                      style={{ justifySelf: 'center' }} /* ensure card sits centered in its column */
+                    >
+                      {/* card wrapper (gradient border) */}
+                      <div className="rounded-xl p-[1.5px] bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 shadow-sm" style={{ width: 'var(--card-w)' }}>
+                        <div className="bg-white/95 rounded-xl px-5 py-4">
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-rose-400 to-indigo-500 flex items-center justify-center flex-shrink-0">
+                              <Icon size={18} className="text-white" />
                             </div>
 
-                            {/* Text Content */}
-                            <div className="relative flex-1">
-                              <div className="flex items-center gap-3 mb-2">
-                                <span className="text-blue-600 text-sm font-mono font-bold tracking-wide">
-                                  {step.code || `S${idx + 1}`}
-                                </span>
-
-                                <span className="text-xs font-mono text-slate-500 tracking-wider">
-                                  {step.gate || 'GATE'} • {step.time || '—'}
-                                </span>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between">
+                                <div className="text-sm font-mono text-cyan-600 font-semibold">{step.code || `S${idx + 1}`}</div>
+                                <div className="text-xs font-mono text-slate-500 whitespace-nowrap">{(step.gate || 'GATE')} • {step.time || ''}</div>
                               </div>
 
-                              <h3 className="text-xl font-semibold text-slate-900 mb-2 font-serif">
-                                {step.title}
-                              </h3>
+                              <h4 className="mt-2 text-lg font-semibold text-slate-900 truncate">{step.title}</h4>
+                              <p className="mt-1 text-sm text-slate-600 line-clamp-3">{step.description}</p>
 
-                              <p className="text-slate-600 leading-relaxed text-sm">
-                                {step.description}
-                              </p>
+                              <div className="mt-3 flex items-center justify-between">
+                                <button className="text-xs px-3 py-1 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">Details</button>
+                                <div className="text-[11px] font-mono text-slate-400">Avg. time: 2m</div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Connector SVG (small curved path from spine to card) */}
-                    <div
-                      className={`hidden md:flex items-center justify-center w-20 relative`}
-                      aria-hidden
-                    >
-                      <svg width="80" height="56" viewBox="0 0 80 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                          <linearGradient id={`connGrad-${idx}`} x1="0" x2="1">
-                            <stop offset="0" stopColor="#2563eb" stopOpacity="1" />
-                            <stop offset="1" stopColor="#06b6d4" stopOpacity="1" />
-                          </linearGradient>
-                        </defs>
-
-                        {isLeft ? (
-                          // curve from right of svg to left (for left-side card)
-                          <path d="M78 28 C58 28, 48 14, 40 14" stroke={`url(#connGrad-${idx})`} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.95" />
-                        ) : (
-                          // mirrored curve for right-side card
-                          <path d="M2 28 C22 28, 32 14, 40 14" stroke={`url(#connGrad-${idx})`} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.95" />
-                        )}
-
-                        {/* small decorative dot at spine side */}
-                        <circle cx="40" cy="14" r="3.2" fill="#06b6d4" opacity="0.95" />
-                      </svg>
-                    </div>
-
-                    {/* Step Marker aligned on the spine */}
-                    <div className="flex-shrink-0 w-20 flex items-center justify-center relative">
-                      <div className="w-16 h-16 rounded-full bg-slate-900 text-white font-bold text-lg font-mono shadow-lg border-4 border-white flex items-center justify-center">
-                        {step.number}
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })}
+                    </motion.div>
+                  )
+                })}
+              </div>
             </div>
           </div>
+
 
 
         </div>
@@ -807,13 +763,16 @@ function App() {
       {/* Testimonials - Luggage Tags */}
       <section id="testimonials" className="py-20 px-4 bg-gradient-to-br from-slate-900 to-slate-800">
         <div className="max-w-6xl mx-auto">
+
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="inline-block bg-slate-700 border-2 border-slate-600 rounded-lg px-6 py-3 mb-6">
-              <div className="text-amber-300 text-xs font-mono uppercase tracking-widest">TRAVELER STORIES</div>
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-3 bg-white rounded-full px-5 py-2 border border-slate-200 shadow-sm mb-4">
+              <div className="w-2 h-2 rounded-full bg-amber-400 shadow-sm" />
+              <div className="text-xs font-mono uppercase tracking-widest text-slate-500">TRAVELER STORIES</div>
             </div>
-            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 font-serif">PASSENGER REVIEWS</h2>
-            <p className="text-lg text-slate-300 max-w-2xl mx-auto">What our travelers say about their journeys</p>
+
+            <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-3">PASSENGER REVIEWS</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">What our travelers say about their journeys</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -992,7 +951,7 @@ function App() {
       </section>
 
       {/* Footer - Ticket Fine Print */}
-      <footer className="bg-slate-950 text-slate-400 py-12 px-4 border-t-2 border-dashed border-slate-700">
+      <footer className="bg-slate-950 text-slate-400 py-12 px-4 border-t-2 border-dashed border-slate-700 relative z-50">
         <div className="max-w-6xl mx-auto">
           {/* Fine Print Area */}
           <div className="text-center mb-8">
